@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloLink, HttpLink } from 'apollo-boost'
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
+  HttpLink,
+  ApolloLink,
 } from "@apollo/client";
 
 const httpLink = new HttpLink({ uri: process.env.REACT_APP_URI})

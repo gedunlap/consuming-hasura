@@ -66,72 +66,66 @@ Notice the **'Docs'** pop out button in the top right corner. It has documentati
 
 ## Using React and Apollo Client to consume the API
 
+(Most of this section is directly from [Apollo Client Documentation](https://www.apollographql.com/docs/react/get-started/))
 
+Start in terminal by navigating to desktop or a folder of choice, next `npx create-react-app project-name`, then cd into `project-name` and `npm install @apollo/client graphql`. Open the file in code editor of choice.
 
+In `index.js` initialize ApolloClient by importing:
 
+    import {
+        ApolloClient,
+        InMemoryCache,
+        ApolloProvider,
+        HttpLink,
+        ApolloLink,
+    } from "@apollo/client";
 
+Next create a `.env` file in the root of the project. 
 
+Return to the Hasura Dashboard where two needed items will be found:
 
+'GraphQL Endpoint' and 'x-hasura-admin-key'.
 
-### `yarn start`
+<img src="https://i.imgur.com/6MZ7oBc.png" alt="key" width="800">
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open the `.env` file and create two variables:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+`REACT_APP_KEY=` (paste 'x-hasura-admin-key' here)
 
-### `yarn test`
+`REACT_APP_URI=` (paste 'GraphQL Endpoint' here)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Make sure to use **NO** quotations on key or url.**
 
-### `yarn build`
+**If you have been running the dev server you will need to restart it now for these variables to work**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Now back in `index.js` use env variables to connect to the API.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<img src="https://i.imgur.com/hoBRsNB.png" alt="code image">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Set the endpoint in HttpLink using the created env variable.
+- Use ApolloLink to pass headers with admin key env variable.
+- ApolloClient concatinates these to send the full request to the API.
+- ApolloProvider wraps the App to enable access to ApolloClient throughout.
 
-### `yarn eject`
+Return to Hasura and copy a database request.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<img src="https://i.imgur.com/JCK68em.png" alt="query" width="400">
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Next, move to `App.js` and import:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    import { useQuery, gql } from '@apollo/client'
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Write a variable holding the Hasura request inside the backticks of a `gql` tag.
+- Set a variable with **'loading, error, data'** equal to `useQuery(GET_TODOS)`.
 
-## Learn More
+<img src="https://i.imgur.com/jDG4Wku.png" alt="use query">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+When your component renders, `useQuery` returns an object from Apollo Client that contains loading, error, and data properties you can use to render your UI.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`console.log` **'loading, error, data'** to see your data on the front end in devtools.
 
-### Code Splitting
+<img src="https://i.imgur.com/bnWbFLW.png" alt="devtools" width="800">
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Now use the data to build out the front end !!!** 
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img src="https://i.imgur.com/YqAkqWO.jpg" alt="neo" width="400">
