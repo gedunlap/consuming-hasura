@@ -3,11 +3,35 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloLink, HttpLink } from 'apollo-boost'
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
+
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_URI})
+
+const authLink = new ApolloLink((operation, forward) => {
+  operation.setContext({
+    headers: {
+      "x-hasura-admin-secret": process.env.REACT_APP_KEY
+    }
+  })
+  return forward(operation)
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+})
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ApolloProvider client={client}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
