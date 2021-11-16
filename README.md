@@ -2,6 +2,26 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Why GraphQL?! 
+
+GraphQL is a way to make specific queries to a single URL endpoint when needed, that returns specific data, rather than multiple calls to various endpoints across an app, as you would in REST.
+
+This example from the documentation shows two seperate queries returning different data.
+
+<img src="https://i.imgur.com/ehhauWm.png" alt="hasura response" width="300">
+
+(source [Learn Hasura](https://hasura.io/learn/graphql/intro-graphql/graphql-vs-rest/))
+
+## What is Hasura?
+
+Hasura is an instant realtime GraphQL API engine.
+
+In just minutes you can have a custom GraphQL API up and running and ready to plug into your app.
+
+If you'd like to see it in action follow this tutorial of my Todo list API.
+
+You can also see my [Consuming Hasura GitHub](https://github.com/gedunlap/consuming-hasura) here!
+
 ## Getting started with Hasura
 
 Head over to https://hasura.io/ and click the **'Get Started In 30 Second'** button.
